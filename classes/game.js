@@ -2,7 +2,8 @@ import BeanFallingEvent from './events/beanFallingEvent.js';
 import Blank from './components/blank.js';
 import Events from './events.js';
 import GameStyle from './styles/gameStyle.js';
-import Grid from './grid.js'
+import Grid from './grid.js';
+import Overlay from './overlay.js';
 import React from 'react';
 
 import { DIRECTIONS } from '../consts/directions.js';
@@ -64,6 +65,11 @@ class Game extends React.Component {
     render() {
         return (
             <div className="section">
+                <Overlay>
+                    <div className="wsup">
+                        wsup
+                    </div>
+                </Overlay>
                 {this.header()}
                 {this.renderGrid()}
                 {GameStyle()}

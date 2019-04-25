@@ -1,10 +1,10 @@
 export default function GameStyle() {
     return (<style jsx="true">{`
         div {
-            font-size : 24px;
-            padding : 0;
-            margin : 0;
-            line-height : 20px;
+            font-size: 24px;
+            padding: 0;
+            margin: 0;
+            line-height: 20px;
             font-family: Courier New, Courier, monospace;
         }
         a {
