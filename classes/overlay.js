@@ -7,14 +7,12 @@ class Overlay extends React.Component {
     }
 
     render() {
-        return (
+        return this.props.hidden ? null : (
             <div className="overlay">
                 {this.props.children}
-                {this.props.style}
                 {OverlayStyle()}
             </div>
-        )
-
+        );
     }
 }
 

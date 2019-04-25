@@ -3,6 +3,7 @@ import Blank from './components/blank.js';
 import Events from './events.js';
 import GameStyle from './styles/gameStyle.js';
 import Grid from './grid.js';
+import Intro from './story/intro.js';
 import Overlay from './overlay.js';
 import React from 'react';
 
@@ -15,7 +16,7 @@ class Game extends React.Component {
             counter: 0,
             grid: [],
             generatingBeans: true,
-            showCoffee: false,
+            showIntro: false,
         }
         this.grid = new Grid(this.performUpdates);
     }
@@ -62,8 +63,8 @@ class Game extends React.Component {
     incrementCounter = () => {
         this.setState((prevState) => {
             let obj = {};
-            if (prevState.counter == 3) {
-                obj.showCoffee = true;
+            if (prevState.counter == 1) {
+                obj.showIntro = true;
             }
             obj.counter = prevState.counter + 1;
             return obj;
@@ -88,21 +89,11 @@ class Game extends React.Component {
         }) : <div/>;
     }
 
-    renderCoffeeButton() {
-        if (this.state.showCoffee) {
-            return (<div className="example">
-                make coffee
-            </div>);
-        } else {
-            return null;
-        }
-    }
-
     render() {
         return (
             <div className="section">
                 <Overlay>
-                    {this.renderCoffeeButton()}
+                    <Intro showCoffee={this.state.showIntro}/>
                 </Overlay>
                 {this.header()}
                 {this.renderGrid()}

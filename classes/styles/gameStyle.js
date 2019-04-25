@@ -4,7 +4,7 @@ export default function GameStyle() {
             font-size: 24px;
             padding: 0;
             margin: 0;
-            line-height: 20px;
+            line-height: 16px;
             font-family: Courier New, Courier, monospace;
         }
         a {
