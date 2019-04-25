@@ -15,6 +15,7 @@ class Game extends React.Component {
             counter: 0,
             grid: [],
             generatingBeans: true,
+            showCoffee: false,
         }
         this.grid = new Grid(this.performUpdates);
     }
@@ -60,7 +61,12 @@ class Game extends React.Component {
 
     incrementCounter = () => {
         this.setState((prevState) => {
-            return {counter: prevState.counter + 1}
+            let obj = {};
+            if (prevState.counter == 3) {
+                obj.showCoffee = true;
+            }
+            obj.counter = prevState.counter + 1;
+            return obj;
         });
     }
 
@@ -69,7 +75,7 @@ class Game extends React.Component {
     }
 
     header() {
-        return <div>{this.state.counter}</div>
+        return <div>{this.state.counter} beans</div>
     }
 
     renderGrid() {
@@ -82,14 +88,21 @@ class Game extends React.Component {
         }) : <div/>;
     }
 
+    renderCoffeeButton() {
+        if (this.state.showCoffee) {
+            return (<div className="example">
+                make coffee
+            </div>);
+        } else {
+            return null;
+        }
+    }
 
     render() {
         return (
             <div className="section">
                 <Overlay>
-                    <div className="example">
-                        wsup
-                    </div>
+                    {this.renderCoffeeButton()}
                 </Overlay>
                 {this.header()}
                 {this.renderGrid()}

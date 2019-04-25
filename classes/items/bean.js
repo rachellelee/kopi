@@ -19,7 +19,7 @@ class Bean extends Item {
     getShape() {
         let bean = (
             <a href="#" onClick={this.handleOnClick}>
-                O
+                º
             </a>
         );
        return [[bean]];
