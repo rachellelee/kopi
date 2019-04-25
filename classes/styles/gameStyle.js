@@ -7,20 +7,6 @@ export default function GameStyle() {
             line-height: 16px;
             font-family: Courier New, Courier, monospace;
         }
-        a {
-            text-decoration: none;
-            color: blue;
-        }
-        a:hover {
-            font-weight: 800;
-        }
-        .blank {
-            color: white;
-        }
-        .row {
-            display: flex;
-            flex-direction: row;
-        }
         .section {
             display: flex;
             align-items: center;

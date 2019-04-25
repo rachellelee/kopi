@@ -6,7 +6,6 @@ export default function IntroStyle() {
             width: 132px;
             left: -100px;
             top: 100px;
-            color: red;
         }
         .dunno {
             position: inherit;

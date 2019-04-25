@@ -2,6 +2,8 @@ import Button from '../components/button.js';
 import IntroStyle from '../styles/introStyle.js'
 import React from 'react';
 
+import { MAPS } from '../../consts/maps.js'
+
 class Intro extends React.Component {
     constructor(props) {
         super(props);
@@ -15,8 +17,8 @@ class Intro extends React.Component {
         this.setState({showDialog: true});
     }
 
-    onDunnoClcik = () => {
-
+    onDunnoClick = () => {
+        this.props.changeMap(MAPS.KITCHEN);
     }
 
     render() {

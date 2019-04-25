@@ -1,103 +1,43 @@
-import BeanFallingEvent from './events/beanFallingEvent.js';
-import Blank from './components/blank.js';
-import Events from './events.js';
+import Forest from './forest.js';
 import GameStyle from './styles/gameStyle.js';
-import Grid from './grid.js';
-import Intro from './story/intro.js';
-import Overlay from './overlay.js';
+import Header from './components/header.js';
+import Kitchen from './kitchen.js';
 import React from 'react';
 
-import { DIRECTIONS } from '../consts/directions.js';
+import { MAPS } from '../consts/maps.js'
+import { Switch, View } from 'react-view-switch';
 
 class Game extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             counter: 0,
-            grid: [],
-            generatingBeans: true,
-            showIntro: false,
+            map: MAPS.FOREST,
         }
-        this.grid = new Grid(this.performUpdates);
-    }
-
-    componentDidMount() {
-        this.events = new Events(this.performUpdates);
-        this.generateBeans();
-        setInterval(() => {
-            this.events.handleNextEvents();
-            this.performUpdates();
-        }, 200);
     }
 
     componentWillUnmount() {
         this.abortController.abort();
     }
 
-    generateBeans() {
-        if (!this.state.generatingBeans) return;
-        setTimeout(() => {
-            this.events.addEvent(
-                new BeanFallingEvent(
-                    (new Date()).getTime(),
-                    this.events,
-                    this.grid,
-                    this.incrementCounter,
-                    this.removeFromGrid
-                )
-            );
-            this.generateBeans();
-        }, Math.floor(Math.random() * 3000) + 1000)
-    }
-
-    performUpdates = (updates) => {
-        this.setState({
-            grid: this.grid.getGrid(),
-        });
-    }
-
-    counter() {
-        return this.counter;
-    }
-
     incrementCounter = () => {
         this.setState((prevState) => {
-            let obj = {};
-            if (prevState.counter == 1) {
-                obj.showIntro = true;
-            }
-            obj.counter = prevState.counter + 1;
-            return obj;
+            return { counter: prevState.counter + 1 };
         });
     }
 
-    removeFromGrid = (id) => {
-        this.grid.removeItem(id);
-    }
-
-    header() {
-        return <div>{this.state.counter} beans</div>
-    }
-
-    renderGrid() {
-        return this.grid ? this.state.grid.map(row => {
-            return (
-                <div className="row">
-                    {row.map(item => item)}
-                </div>
-            );
-        }) : <div/>;
+    changeMap = (map) => {
+        console.log('changemap', map)
+        this.setState({ map: map });
     }
 
     render() {
         return (
             <div className="section">
-                <Overlay>
-                    <Intro showCoffee={this.state.showIntro}/>
-                </Overlay>
-                {this.header()}
-                {this.renderGrid()}
-                {GameStyle()}
+                <Header counter={this.state.counter}/>
+                <Forest visible={this.state.map == MAPS.FOREST} counter={this.state.counter} incrementCounter={this.incrementCounter} changeMap={this.changeMap}/>
+                <Kitchen visible={this.state.map == MAPS.KITCHEN} changeMap={this.changeMap}/>
+                <GameStyle />
             </div>
         );
     }
