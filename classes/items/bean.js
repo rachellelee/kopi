@@ -1,14 +1,24 @@
 import Item from './item.js'
 
 class Bean extends Item {
-    constructor(incrementCounter) {
+    constructor(incrementCounter, removeFromGrid) {
         super()
         this.incrementCounter = incrementCounter;
+        this.removeFromGrid = removeFromGrid;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    handleOnClick = () => {
+        this.incrementCounter();
+        this.removeFromGrid(this.id);
     }
 
     getShape() {
         let bean = (
-            <a href="#" onClick={this.incrementCounter}>
+            <a href="#" onClick={this.handleOnClick}>
                 O
             </a>
         );

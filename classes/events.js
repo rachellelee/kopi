@@ -3,15 +3,28 @@ class Events {
         this.events = [];
     }
 
-    addNextEvent(event) {
+    addEvent(event) {
+        for (let x = 0; this.events[x]; x++) {
+            if (this.events[x].time > event.time) {
+                this.events.splice(x, 0, event);
+                return;
+            }
+        }
         this.events.push(event);
     }
 
     handleNextEvents() {
-        let nextEvents = this.events;
-        this.events = [];
-        nextEvents.forEach(event => event.handle());
+        let now = (new Date()).getTime();
+        let eventList = [];
+        while (this.events.length > 0) {
+            if (this.events[0].time <= now) {
+                eventList.push(this.events.shift());
+            } else {
+                break;
+            }
+        }
+        eventList.forEach(event => { event.handle() });
     }
 }
 
-export default Events
+export default Events;

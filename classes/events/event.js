@@ -1,7 +1,11 @@
 class Event {
     constructor(events, grid) {
+        if (this.constructor == Event) {
+            throw new Error("Abstract classes can't be instantiated");
+        }
         this.events = events;
         this.grid = grid;
+        Event.prototype.time;
     }
 
     handle() {

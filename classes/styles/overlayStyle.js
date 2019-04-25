@@ -3,7 +3,7 @@ export default function OverlayStyle() {
         .overlay {
             position: relative;
         }
-        .overlay .wsup {
+        .overlay .example {
             position: inherit;
             right: 100px;
             top: 100px;

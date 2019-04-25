@@ -14,24 +14,41 @@ class Game extends React.Component {
         this.state = {
             counter: 0,
             grid: [],
+            generatingBeans: true,
         }
-        this.grid = new Grid();
+        this.grid = new Grid(this.performUpdates);
     }
 
     componentDidMount() {
-        this.events = new Events(this.performUpdates)
-        let beanFallingEvent = new BeanFallingEvent(this.events, this.grid, this.incrementCounter);
+        this.events = new Events(this.performUpdates);
+        this.generateBeans();
         setInterval(() => {
             this.events.handleNextEvents();
             this.performUpdates();
-        }, 1000);
+        }, 200);
     }
 
     componentWillUnmount() {
         this.abortController.abort();
     }
 
-    performUpdates(updates) {
+    generateBeans() {
+        if (!this.state.generatingBeans) return;
+        setTimeout(() => {
+            this.events.addEvent(
+                new BeanFallingEvent(
+                    (new Date()).getTime(),
+                    this.events,
+                    this.grid,
+                    this.incrementCounter,
+                    this.removeFromGrid
+                )
+            );
+            this.generateBeans();
+        }, Math.floor(Math.random() * 3000) + 1000)
+    }
+
+    performUpdates = (updates) => {
         this.setState({
             grid: this.grid.getGrid(),
         });
@@ -45,6 +62,10 @@ class Game extends React.Component {
         this.setState((prevState) => {
             return {counter: prevState.counter + 1}
         });
+    }
+
+    removeFromGrid = (id) => {
+        this.grid.removeItem(id);
     }
 
     header() {
@@ -66,7 +87,7 @@ class Game extends React.Component {
         return (
             <div className="section">
                 <Overlay>
-                    <div className="wsup">
+                    <div className="example">
                         wsup
                     </div>
                 </Overlay>

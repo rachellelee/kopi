@@ -1,11 +1,13 @@
 import Blank from './components/blank.js';
 import { DIRECTIONS } from '../consts/directions.js';
+import { DIMENSIONS } from '../consts/dimensions.js';
 
 class Grid {
-    constructor() {
+    constructor(performUpdates) {
         this.idInc = 0;
         this.items = {};
-        this.grid = new Array(36).fill(<Blank/>).map(() => new Array(36).fill(<Blank/>));
+        this.performUpdates = performUpdates;
+        this.grid = new Array(DIMENSIONS.GRIDWIDTH).fill(<Blank/>).map(() => new Array(DIMENSIONS.GRIDHEIGHT).fill(<Blank/>));
     }
 
     getGrid() {
@@ -25,9 +27,13 @@ class Grid {
 
     removeItem(id) {
         delete this.items[id];
+        this.updateGrid();
+        this.performUpdates();
+
     }
 
     moveItem(id, direction, steps) {
+        if (!this.items[id]) return;
         let item = this.items[id];
         switch(direction) {
             case DIRECTIONS.UP:
